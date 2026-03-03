@@ -1,0 +1,83 @@
+﻿
+> excalidraw-clone@0.0.0 lint
+> eslint .
+
+
+C:\Users\Acer\OneDrive\Desktop\WebstormProjects\Excalidraw\src\App.jsx
+  115:9  error    Error: Cannot access variable before it is declared
+
+`handleSave` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  113 |       if ((e.ctrlKey || e.metaKey) && e.key === "s") {
+  114 |         e.preventDefault();
+> 115 |         handleSave();
+      |         ^^^^^^^^^^ `handleSave` accessed before it is declared
+  116 |       }
+  117 |       // Export: Ctrl+E
+  118 |       if ((e.ctrlKey || e.metaKey) && e.key === "e") {
+
+  129 |   //  SAVE / LOAD (localStorage)
+  130 |   // =============================
+> 131 |   const handleSave = useCallback(() => {
+      |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 132 |     if (!canvas) return;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 133 |     const json = JSON.stringify(canvas.toJSON());
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 134 |     localStorage.setItem(STORAGE_KEY, json);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 135 |     setSaveStatus("saved");
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 136 |     setTimeout(() => setSaveStatus(""), 2000);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 137 |   }, [canvas]);
+      | ^^^^^^^^^^^^^^^^ `handleSave` is declared here
+  138 |
+  139 |   const handleLoad = useCallback(() => {
+  140 |     if (!canvas) return;  react-hooks/immutability
+  120:9  error    Error: Cannot access variable before it is declared
+
+`handleExportPNG` is accessed before it is declared, which prevents the earlier access from updating when this value changes over time.
+
+  118 |       if ((e.ctrlKey || e.metaKey) && e.key === "e") {
+  119 |         e.preventDefault();
+> 120 |         handleExportPNG();
+      |         ^^^^^^^^^^^^^^^ `handleExportPNG` accessed before it is declared
+  121 |       }
+  122 |     };
+  123 |
+
+  170 |   //  EXPORT AS PNG
+  171 |   // =============================
+> 172 |   const handleExportPNG = useCallback(() => {
+      |   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 173 |     if (!canvas) return;
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 174 |     const dataURL = canvas.toDataURL({
+      ΓÇª
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 187 |     setTimeout(() => setSaveStatus(""), 2000);
+      | ^^^^^^^^^^^^^^^^^^^^^^^^
+> 188 |   }, [canvas]);
+      | ^^^^^^^^^^^^^^^^ `handleExportPNG` is declared here
+  189 |
+  190 |   // =============================
+  191 |   //  SHAPE ADDING FUNCTIONS                                                                                                                                                                                                                    react-hooks/immutability
+  126:6  warning  React Hook useEffect has missing dependencies: 'handleExportPNG' and 'handleSave'. Either include them or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            react-hooks/exhaustive-deps
+  315:5  error    Error: This value cannot be modified
+
+Modifying a value returned from 'useState()', which should not be modified directly. Use the setter function to update instead.
+
+  313 |     saveState();
+  314 |     canvas.clear();
+> 315 |     canvas.backgroundColor = "transparent";
+      |     ^^^^^^ `canvas` cannot be modified
+  316 |     canvas.renderAll();
+  317 |   };
+  318 |                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              react-hooks/immutability
+
+C:\Users\Acer\OneDrive\Desktop\WebstormProjects\Excalidraw\src\components\Whiteboard.jsx
+  85:6  warning  React Hook useEffect has missing dependencies: 'activeColor', 'activeStroke', 'darkMode', and 'setCanvas'. Either include them or remove the dependency array. If 'setCanvas' changes too often, find the parent component that defines it and wrap that definition in useCallback  react-hooks/exhaustive-deps
+
+Γ£û 5 problems (3 errors, 2 warnings)
+
